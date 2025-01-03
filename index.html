@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>챌린저스 점수 계산기</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>챌린저스 점수 계산기</h1>
+    </header>
+    <main>
+        <section id="input-section">
+            <h2>입력 값</h2>
+            <form id="input-form">
+                <div class="row">
+                    <label for="current-weeks">현재 출석 (주/일):</label>
+                    <input type="text" id="current-weeks" name="current-weeks" placeholder="주" required>
+                    <input type="text" id="current-days" name="current-days" placeholder="일" required>
+                </div>
+
+                <div class="row">
+                    <label for="target-weeks">목표 출석 (주/일):</label>
+                    <input type="text" id="target-weeks" name="target-weeks" placeholder="주" required>
+                    <input type="text" id="target-days" name="target-days" placeholder="일" required>
+                </div>
+
+                <div class="row">
+                    <label for="current-level">현재/목표 레벨:</label>
+                    <input type="text" id="current-level" name="current-level" placeholder="현재 레벨을 입력해주세요" required>
+                    <input type="text" id="target-level" name="target-level" placeholder="목표 레벨을 입력해주세요" required>
+                </div>
+
+                <div class="row">
+                    <label for="target-score">목표/현재 점수:</label>
+                    <input type="text" id="target-score" name="target-score" placeholder="목표 점수를 입력해주세요" required>
+                    <input type="text" id="current-score" name="current-score" readonly>
+                </div>
+
+                <fieldset id="boss-selector">
+                    <legend>처치한 보스</legend>
+                    <table id="boss-table">
+                        <thead>
+                            <tr>
+                                <th>점수</th>
+                                <th>보스</th>
+                                <th>난이도</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>50</td>
+                                <td>시그너스</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="시그너스" data-level="easy"> 이지</label>
+                                    <label><input type="checkbox" data-boss="시그너스" data-level="normal"> 노말</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>자쿰</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="자쿰" data-level="chaos"> 카오스</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>힐라</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="힐라" data-level="hard"> 하드</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>핑크빈</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="핑크빈" data-level="chaos"> 카오스</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>피에르</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="피에르" data-level="chaos"> 카오스</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>반반</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="반반" data-level="chaos"> 카오스</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>블러디퀸</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="블러디퀸" data-level="chaos"> 카오스</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>매그너스</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="매그너스" data-level="hard"> 하드</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>200</td>
+                                <td>벨룸</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="벨룸" data-level="chaos"> 카오스</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>200</td>
+                                <td>파풀라투스</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="파풀라투스" data-level="chaos"> 카오스</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>250</td>
+                                <td>스우</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="스우" data-level="normal"> 노말</label>
+                                    <label><input type="checkbox" data-boss="스우" data-level="hard"> 하드</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>350</td>
+                                <td>데미안</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="데미안" data-level="normal"> 노말</label>
+                                    <label><input type="checkbox" data-boss="데미안" data-level="hard"> 하드</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1500</td>
+                                <td>가엔슬</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="가엔슬" data-level="normal"> 노말</label>
+                                    <label><input type="checkbox" data-boss="가엔슬" data-level="chaos"> 카오스</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>350</td>
+                                <td>루시드</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="루시드" data-level="easy"> 이지</label>
+                                    <label><input type="checkbox" data-boss="루시드" data-level="normal"> 노말</label>
+                                    <label><input type="checkbox" data-boss="루시드" data-level="hard"> 하드</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1500</td>
+                                <td>윌</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="윌" data-level="easy"> 이지</label>
+                                    <label><input type="checkbox" data-boss="윌" data-level="normal"> 노말</label>
+                                    <label><input type="checkbox" data-boss="윌" data-level="hard"> 하드</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>더스크</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="더스크" data-level="normal"> 노말</label>
+                                    <label><input type="checkbox" data-boss="더스크" data-level="chaos"> 카오스</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2500</td>
+                                <td>진힐라</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="진힐라" data-level="normal"> 노말</label>
+                                    <label><input type="checkbox" data-boss="진힐라" data-level="hard"> 하드</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>듄켈</td>
+                                <td>
+                                    <label><input type="checkbox" data-boss="듄켈" data-level="normal"> 노말</label>
+                                    <label><input type="checkbox" data-boss="듄켈" data-level="hard"> 하드</label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+
+                <button type="submit">계산!</button>
+            </form>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="output-section">
+            <h2>결과</h2>
+            <div class="result-box">
+                <div class="row">
+                    <label>최종 출석:</label>
+                    <span id="final-attendance">12주 3일</span>
+                </div>
+                <div class="row">
+                    <label>달성해야 할 레벨:</label>
+                    <span id="final-level">Lv. 200</span>
+                </div>
+                <div class="row">
+                    <label>추가로 잡아야 할 보스:</label>
+                    <span class="toggle" id="boss-toggle">보스 목록 펼치기 ▼</span>
+                </div>
+                <div class="boss-list" id="boss-list">
+                    <ul>
+                        <li>보스 1</li>
+                        <li>보스 3</li>
+                        <li>보스 5</li>
+                        <!-- Add more bosses here -->
+                    </ul>
+                </div>
+                <div class="row">
+                    <label>최종 점수:</label>
+                    <span id="final-score">123,456점</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 챌린저스 점수 계산기</p>
+    </footer>
+</body>
+</html>

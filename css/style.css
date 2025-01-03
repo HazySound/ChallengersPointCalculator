@@ -1,0 +1,200 @@
+@font-face {
+    font-family: 'Maplestory';
+    src: url('/fonts/Maplestory-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Maplestory';
+    src: url('/fonts/Maplestory-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    font-family: 'Maplestory', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: grid;
+    gap: 20px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+label {
+    flex: 1;
+    font-weight: bold;
+    color: #555;
+}
+
+input {
+    font-family: 'Maplestory', sans-serif;
+    flex: 2;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input:read-only {
+    background-color: #f9f9f9;
+    color: #888;
+}
+
+button {
+    font-family: 'Maplestory', sans-serif;
+    background-color: #d3d3d3; /* 옅은 회색 */
+    color: black;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    display: block;
+    margin: 1rem auto;
+}
+
+button:hover {
+    background-color: #bcbcbc; /* 약간 더 진한 회색 */
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+legend {
+    font-weight: bold;
+    color: #333;
+}
+
+.divider {
+    border-top: 1px solid #ccc;
+    margin: 2rem 0;
+}
+
+.result-box {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px; /* 박스 크기 줄임 */
+    margin: 20px auto; /* 가운데 정렬 */
+    background-color: #f9f9f9;
+    max-width: 50%; /* 절반 크기로 설정 */
+    text-align: left;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.toggle {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.boss-list {
+    display: none;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.boss-list.open {
+    display: block;
+}
+
+/* 보스 테이블 스타일 */
+#boss-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+#boss-table th, #boss-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#boss-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* 점수 열 고정 너비 */
+#boss-table td:first-child, #boss-table th:first-child {
+    width: 100px; /* 고정 너비 설정 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+
+/* 체크박스 라벨 스타일 */
+#boss-table label {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* 초기 색상 */
+#boss-table input[type="checkbox"]:not(:checked) + label {
+    background-color: #FFBABA; /* 빨간색 */
+}
+
+#boss-table input[type="checkbox"]:checked + label {
+    background-color: #DFF2BF; /* 초록색 */
+}
+
+/* 보스명 셀 색상 */
+.boss-name-green {
+    background-color: #DFF2BF; /* 초록색 */
+    color: black;
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.boss-name-white {
+    background-color: white; /* 흰색 */
+    color: black;
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
