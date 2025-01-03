@@ -149,9 +149,189 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    initializeBossScores();
-    updateBossScores();
+    // Calculate and update attendance score
+    const calculateCurrentScore = () => {
+        const weeksInput = document.getElementById('current-weeks');
+        const daysInput = document.getElementById('current-days');
+        const levelInput = document.getElementById('current-level');
+        const bossTable = document.getElementById('boss-table');
+        const currentScoreInput = document.getElementById('current-score');
 
+        const getNumericValue = (input) => {
+            return parseInt(input.value.replace(/[^0-9]/g, ''), 10) || 0;
+        };
+
+        const updateScore = () => {
+            let weeks = getNumericValue(weeksInput);
+            let days = getNumericValue(daysInput);
+            let level = getNumericValue(levelInput);
+
+            // Cap weeks at 22
+            if (weeks > 22) {
+                weeks = 22;
+                weeksInput.value = '22주'; // Update input field visually
+            }
+
+            // Cap days at 110
+            if (days > 110) {
+                days = 110;
+                daysInput.value = '110일'; // Update input field visually
+            }
+
+            // Calculate attendance score
+            const attendanceScore = Math.min((weeks * 5 + days) * 100, 11000);
+
+            // Determine score based on level
+            let levelScore = 0;
+            if (level >= 260 && level <= 264) {
+                levelScore = 1000;
+            } else if (level >= 265 && level <= 269) {
+                levelScore = 3000;
+            } else if (level >= 270 && level <= 274) {
+                levelScore = 6000;
+            } else if (level >= 275 && level <= 279) {
+                levelScore = 11000;
+            } else if (level >= 280) {
+                levelScore = 18000;
+            }
+
+            // Sum up all scores from the boss table
+            const bossScores = Array.from(bossTable.querySelectorAll('tbody tr td:first-child'))
+            .map(cell => parseInt(cell.textContent.replace(/[^0-9]/g, ''), 10) || 0)
+            .reduce((acc, score) => acc + score, 0);
+
+            const totalScore = attendanceScore + levelScore + bossScores;
+
+            // Update current score field
+            currentScoreInput.value = `${formatNumberWithCommas(totalScore)}점`;
+        };
+
+        // Add event listeners to update score on input change
+        weeksInput.addEventListener('input', updateScore);
+        daysInput.addEventListener('input', updateScore);
+
+        // Add event listener to update score on input change
+        levelInput.addEventListener('input', updateScore);
+
+        // Add event listener to update score on checkbox change
+        bossTable.addEventListener('change', updateScore);
+
+        // Initialize with current values
+        updateScore();
+    };
+
+    // Calculate and validate maximum and minimum target attendance weeks and days
+    const calculateAndSetTargetAttendance = () => {
+        const targetWeeksInput = document.getElementById('target-weeks');
+        const targetDaysInput = document.getElementById('target-days');
+        const currentWeeksInput = document.getElementById('current-weeks');
+        const currentDaysInput = document.getElementById('current-days');
+
+        const calculateDaysFromWeeksAndDays = (weeks, days) => weeks * 5 + days;
+
+        const calculateMaxAttendance = () => {
+            const today = new Date();
+            const targetDate = new Date(2025, 4, 21); // May 21, 2025
+
+            const totalDays = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24)) + 1;
+
+            const daysUntilThursday = (4 - today.getDay() + 7) % 7; // Days until next Thursday
+            const daysUntilWednesday = (3 - today.getDay() + 7) % 7; // Days until next Wednesday
+            const daysThisWeek = Math.min(daysUntilWednesday + 1, 5); // Days left this week (max 5)
+
+            const firstThursday = new Date(today.getTime() + daysUntilThursday * (1000 * 60 * 60 * 24));
+            const remainingWeeks = Math.floor((targetDate - firstThursday) / (1000 * 60 * 60 * 24 * 7)) + 1;
+
+            const maxTotalDays = Math.min(totalDays, remainingWeeks * 5 + daysThisWeek);
+            const maxWeeks = Math.floor(maxTotalDays / 5);
+            const maxDays = maxTotalDays % 5;
+
+            return { maxWeeks, maxDays, maxTotalDays };
+        };
+
+        const validateInput = () => {
+            const getNumericValue = (input) => parseInt(input.value.replace(/[^0-9]/g, ''), 10) || 0;
+
+            const currentWeeks = getNumericValue(currentWeeksInput);
+            const currentDays = getNumericValue(currentDaysInput);
+            const currentTotalDays = calculateDaysFromWeeksAndDays(currentWeeks, currentDays);
+
+            const targetWeeks = getNumericValue(targetWeeksInput);
+            const targetDays = getNumericValue(targetDaysInput);
+            const targetTotalDays = calculateDaysFromWeeksAndDays(targetWeeks, targetDays);
+
+            const { maxTotalDays } = calculateMaxAttendance();
+            const adjustedMaxDays = Math.min(maxTotalDays + currentTotalDays, 110); // Limit to 110 days (22 weeks)
+
+            // Minimum total days is based on current attendance
+            const adjustedMinDays = currentTotalDays;
+
+            // Adjust input if it exceeds maximum or falls below minimum
+            if (targetTotalDays > adjustedMaxDays) {
+                targetWeeksInput.value = `${Math.floor(adjustedMaxDays / 5)}주`;
+                targetDaysInput.value = `${adjustedMaxDays % 5}일`;
+            } else if (targetTotalDays < adjustedMinDays) {
+                targetWeeksInput.value = `${Math.floor(adjustedMinDays / 5)}주`;
+                targetDaysInput.value = `${adjustedMinDays % 5}일`;
+            } else {
+                // Reapply prefix/suffix
+                targetWeeksInput.value = `${targetWeeks}주`;
+                targetDaysInput.value = `${targetDays}일`;
+            }
+        };
+
+        const initializeMaxAndMinValues = () => {
+            const getNumericValue = (input) => parseInt(input.value.replace(/[^0-9]/g, ''), 10) || 0;
+
+            const currentWeeks = getNumericValue(currentWeeksInput);
+            const currentDays = getNumericValue(currentDaysInput);
+            const currentTotalDays = calculateDaysFromWeeksAndDays(currentWeeks, currentDays);
+
+            const { maxTotalDays } = calculateMaxAttendance();
+            const adjustedMaxDays = Math.min(maxTotalDays + currentTotalDays, 110); // Limit to 110 days (22 weeks)
+
+            // Set maximum values
+            const maxWeeks = Math.floor(adjustedMaxDays / 5);
+            const maxDays = adjustedMaxDays % 5;
+
+            // Set minimum values
+            const minWeeks = Math.floor(currentTotalDays / 5);
+            const minDays = currentTotalDays % 5;
+
+            targetWeeksInput.max = maxWeeks;
+            targetDaysInput.max = maxDays;
+
+            targetWeeksInput.min = minWeeks;
+            targetDaysInput.min = minDays;
+
+            // Set default values
+            targetWeeksInput.value = `${maxWeeks}주`;
+            targetDaysInput.value = `${maxDays}일`;
+        };
+
+        const attachListenersToCurrentAttendance = () => {
+            const getNumericValue = (input) => parseInt(input.value.replace(/[^0-9]/g, ''), 10) || 0;
+
+            const validateInputOnCurrentAttendanceChange = () => {
+                initializeMaxAndMinValues();
+                validateInput();
+            };
+
+            // Add event listeners to recalculate max/min values and validate inputs
+            currentWeeksInput.addEventListener('input', validateInputOnCurrentAttendanceChange);
+            currentDaysInput.addEventListener('input', validateInputOnCurrentAttendanceChange);
+        };
+
+        // Add event listeners to validate target attendance input
+        targetWeeksInput.addEventListener('input', validateInput);
+        targetDaysInput.addEventListener('input', validateInput);
+
+        // Initialize maximum and minimum values on page load
+        initializeMaxAndMinValues();
+        validateInput();
+        attachListenersToCurrentAttendance();
+    };
+    
     // Apply prefix and suffix to input fields
     addPrefixSuffix('current-weeks', '', '주');
     addPrefixSuffix('current-days', '', '일');
@@ -161,7 +341,16 @@ document.addEventListener('DOMContentLoaded', () => {
     addPrefixSuffix('target-level', 'Lv. ', '');
     addPrefixSuffix('target-score', '', '점');
 
+    initializeBossScores();
+    updateBossScores();
+
+    // Call the function to set up listeners and initialize score
+    calculateCurrentScore();
+
+    // Call the function to calculate and validate target attendance
+    calculateAndSetTargetAttendance();
+
     // Automatically set example current score
     const currentScoreInput = document.getElementById('current-score');
-    currentScoreInput.value = `${formatNumberWithCommas(123456)}점`;
+    currentScoreInput.value = `${formatNumberWithCommas(0)}점`;
 });
