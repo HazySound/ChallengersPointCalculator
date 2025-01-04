@@ -20,13 +20,18 @@ body {
     background-color: #f4f4f4;
 }
 
+/* 상단 배너 스타일 */
 header {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #f4f4f4; /* 옅은 회색 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    color: #333; /* 텍스트 색상 */
     padding: 20px;
     text-align: center;
     font-size: 24px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd; /* 하단 경계선 */
 }
+
 
 main {
     max-width: 800px;
@@ -124,6 +129,7 @@ legend {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    gap: 20px; /* 라벨과 입력 필드 간 간격 */
 }
 
 .toggle {
@@ -197,4 +203,178 @@ legend {
     background-color: white; /* 흰색 */
     color: black;
     text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+
+/* 드롭다운 스타일 */
+select {
+    font-family: 'Maplestory', sans-serif;
+    flex: 2; /* 다른 입력 필드와 동일한 flex 비율 */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: white;
+    cursor: pointer;
+    width: 100%; /* 입력 필드와 동일한 너비 설정 */
+    max-width: 100%; /* 입력 필드와 정렬 유지 */
+}
+
+select:focus {
+    outline: none;
+    border-color: #4CAF50; /* 포커스 시 초록색 테두리 */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* 포커스 시 부드러운 초록색 그림자 */
+}
+
+/* 입력 컨테이너 레이아웃 */
+.input-container {
+    display: grid;
+    grid-template-columns: auto 1fr; /* 왼쪽: 라벨 열, 오른쪽: 입력 필드 열 */
+    column-gap: 40px; /* 열 간 간격 */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 라벨 열 스타일 */
+.label-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 각 라벨 행(row) 간 간격 */
+}
+
+.label-column .row {
+    display: flex;
+    align-items: center; /* 라벨을 수직 가운데 정렬 */
+    height: 40px; /* 입력 필드와 동일한 높이 */
+}
+
+.label-column label {
+    font-weight: bold;
+    color: #555;
+    text-align: right;
+    width: auto; /* 고정 너비 */
+    line-height: normal; /* 기본 줄 높이 유지 */
+    position: relative;
+}
+
+/* 입력 필드 열 스타일 */
+.input-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 각 입력 필드 행(row) 간 간격 */
+}
+
+.input-column .row {
+    display: flex;
+    align-items: center; /* 입력 필드를 수직 가운데 정렬 */
+    height: 40px; /* 라벨과 동일한 높이로 설정 */
+    gap: 10px; /* 입력 필드 간 간격 */
+}
+
+.input-column input,
+.input-column select {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.input-column input:focus,
+.input-column select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* 목표 달성 여부 표시 스타일 */
+.achievement-status {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 목표 달성 여부 상태에 따른 색상 */
+.achievement-status.success {
+    color: #4CAF50; /* 초록색 */
+    background-color: #E8F5E9;
+}
+
+.achievement-status.fail {
+    color: #F44336; /* 빨간색 */
+    background-color: #FFEBEE;
+}
+
+.checkbox-container {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center; /* 체크박스를 수평 중앙 정렬 */
+    justify-content: center; /* 체크박스를 수직 중앙 정렬 */
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-bottom: 5px; /* 라벨과의 간격 */
+    transform: scale(1.2); /* 체크박스 크기 조정 */
+    outline: none; /* 포커스 시 초록색 테두리 제거 */
+    box-shadow: none; /* 일부 브라우저에서 남아있는 그림자 제거 */
+}
+
+.checkbox-container label {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+}
+
+input[title]:hover {
+    border-color: #007BFF;
+}
+
+/* 기본 툴팁 스타일 */
+.tooltip-container {
+    position: relative;
+}
+
+/* 툴팁 숨기기 (기본 상태) */
+.tooltip-container .tooltip-text {
+    content: attr(data-tooltip); /* data-tooltip 속성의 내용을 표시 */
+    position: absolute;
+    top: -40px; /* 입력 필드 상단 */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff; /* 흰색 배경 */
+    color: #666666; /* 옅은 회색 글씨 */
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 17px; /* 글씨 크기 */
+    font-weight: 400;
+    white-space: pre; /* 텍스트 줄바꿈 처리 */
+    text-align: justify; /* 양쪽 정렬 */
+    overflow-wrap: break-word; /* 너무 긴 단어는 강제로 줄바꿈 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+    opacity: 0; /* 초기 상태: 투명 */
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+}
+
+/* 버튼에 적용되는 툴팁 스타일 */
+button.tooltip-container .tooltip-text {
+    top: -80px; /* 기본 툴팁보다 20px 더 위로 이동 */
+}
+
+/* 마우스 호버 시 툴팁 표시 */
+.tooltip-container:hover .tooltip-text {
+    opacity: 1; /* 투명도 변경으로 툴팁 표시 */
+    transform: translateX(-50%) translateY(-5px); /* 살짝 위로 이동 */
 }

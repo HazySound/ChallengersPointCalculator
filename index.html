@@ -15,28 +15,66 @@
         <section id="input-section">
             <h2>입력 값</h2>
             <form id="input-form">
-                <div class="row">
-                    <label for="current-weeks">현재 출석 (주/일):</label>
-                    <input type="text" id="current-weeks" name="current-weeks" placeholder="주" required>
-                    <input type="text" id="current-days" name="current-days" placeholder="일" required>
-                </div>
-
-                <div class="row">
-                    <label for="target-weeks">목표 출석 (주/일):</label>
-                    <input type="text" id="target-weeks" name="target-weeks" placeholder="주" required>
-                    <input type="text" id="target-days" name="target-days" placeholder="일" required>
-                </div>
-
-                <div class="row">
-                    <label for="current-level">현재/목표 레벨:</label>
-                    <input type="text" id="current-level" name="current-level" placeholder="현재 레벨을 입력해주세요" required>
-                    <input type="text" id="target-level" name="target-level" placeholder="목표 레벨을 입력해주세요" required>
-                </div>
-
-                <div class="row">
-                    <label for="target-score">목표/현재 점수:</label>
-                    <input type="text" id="target-score" name="target-score" placeholder="목표 점수를 입력해주세요" required>
-                    <input type="text" id="current-score" name="current-score" readonly>
+                <div class="input-container">
+                    <div class="label-column">
+                        <div class="row">
+                            <label for="current-weeks" class="tooltip-container" data-tooltip="현재까지 출석한 기간을 입력해주세요.\n
+입력하실 때는 [풀 출석한 주] / [나머지 일] 이렇게 입력해주시면 됩니다.\n
+즉, 2주 풀출석 + 1일 출석 => 2주 1일\n이렇게 이해하시면 되겠습니다.\n
+만약 헷갈리시거나 풀출석을 하지 않은 경우에는 일수로 계산하시어 (일) 항목에 입력해주시면 됩니다.\n(1주당 5일로 계산합니다)\n
+입력 예시)
+*1주차 풀 출석 + 2주차 풀 출석 + 3주차 1일 출석 => 2주 1일
+*1주차 풀 출석 + 2주차 3일 출석 + 3주차 1일 출석 => 5일+3일+1일 출석
+   => 총 9일 출석이므로 [0주 9일] 혹은 [1주 4일] 입력
+*22주 풀 출석 => [22주 0일] 혹은 [0주 110일] 입력">현재 출석 (주/일):</label>
+                        </div>
+                        <div class="row">
+                            <label for="attendance-this-week" class="tooltip-container" data-tooltip="오늘을 포함하여 이번 주(목~수)에 출석한 기간(일)을 선택해주세요.\n\n오늘 출석을 완료했다면 오른쪽 체크박스를 체크해주세요.">이번 주 출석한 일수:</label>
+                        </div>
+                        <div class="row">
+                            <label for="target-weeks" class="tooltip-container" data-tooltip="몇 주 며칠 출석을 목표로 하는지 적어주시면 됩니다.\n\n작성법은 '현재 출석 기간' 입력 요령과 동일합니다.\n
+두 입력칸이 모두 비어있다면 이벤트 종료까지 출석할 수 있는 최대 기간으로 설정됩니다.
+(일) 입력칸만 비어 있으면 0일로 취급합니다. (n주 0일)">목표 출석 (주/일):</label>
+                        </div>
+                        <div class="row">
+                            <label for="current-level" class="tooltip-container" data-tooltip="[현재 레벨] / [목표 레벨]을 입력해주세요.\n\n목표 레벨이 비어 있을 경우 최대 레벨(Lv. 280)로 취급합니다.">현재/목표 레벨:</label>
+                        </div>
+                        <div class="row">
+                            <label for="target-score" class="tooltip-container" data-tooltip="목표 점수를 입력해주세요.\n\n현재 점수는 '현재 출석', '현재 레벨', '처치한 보스' 항목에 따라 자동 계산됩니다.">목표/현재 점수:</label>
+                        </div>
+                    </div>
+                    <div class="input-column">
+                        <div class="row">
+                            <input type="text" id="current-weeks" name="current-weeks" placeholder="풀 출석한 기간 (주)" required>
+                            <input type="text" id="current-days" name="current-days" placeholder="풀 출석 못한 기간 합 (일)" required>
+                        </div>
+                        <div class="row">
+                            <select id="attendance-this-week" name="attendance-this-week" required>
+                                <option value="0">0일</option>
+                                <option value="1">1일</option>
+                                <option value="2">2일</option>
+                                <option value="3">3일</option>
+                                <option value="4">4일</option>
+                                <option value="5">5일</option>
+                            </select>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="attended-today" name="attended-today">
+                                <label for="attended-today">오늘 출석을 완료함</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input type="text" id="target-weeks" name="target-weeks" placeholder="주" required>
+                            <input type="text" id="target-days" name="target-days" placeholder="일" title="비어 있을 경우 0일로 취급됩니다.">
+                        </div>
+                        <div class="row">
+                            <input type="text" id="current-level" name="current-level" placeholder="현재 레벨을 입력해주세요" required>
+                            <input type="text" id="target-level" name="target-level" placeholder="목표 레벨을 입력해주세요" required>
+                        </div>
+                        <div class="row">
+                            <input type="text" id="target-score" name="target-score" placeholder="목표 점수를 입력해주세요" required>
+                            <input type="text" id="current-score" name="current-score" readonly>
+                        </div>
+                    </div>
                 </div>
 
                 <fieldset id="boss-selector">
@@ -191,7 +229,7 @@
                     </table>
                 </fieldset>
 
-                <button type="submit">계산!</button>
+                <button id="calculate-button" type="button" class="tooltip-container" data-tooltip="잠깐!!!\n\n입력을 완료했다면 '현재 점수'가 인게임 점수와 같은지 확인해주세요!!">계산!</button>
             </form>
         </section>
 
@@ -200,9 +238,13 @@
         <section id="output-section">
             <h2>결과</h2>
             <div class="result-box">
+                <!-- 목표 달성 여부 표시 -->
+                <div class="achievement-status" id="achievement-status">
+                    계산 전
+                </div>
                 <div class="row">
-                    <label>최종 출석:</label>
-                    <span id="final-attendance">12주 3일</span>
+                    <label>이 날까지 풀출석 해야 돼용:</label>
+                    <span id="final-attendance">2025. 5. 21. (수요일)</span>
                 </div>
                 <div class="row">
                     <label>달성해야 할 레벨:</label>
