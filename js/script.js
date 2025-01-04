@@ -769,6 +769,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    const refreshBanner = document.getElementById('refresh-banner');
+
+    refreshBanner.addEventListener('click', () => {
+        location.reload(); // 웹페이지 새로고침
+    });
+
 
     // Apply prefix and suffix to input fields
     addPrefixSuffix('current-weeks', '', '주');
