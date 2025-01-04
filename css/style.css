@@ -1,13 +1,13 @@
 @font-face {
     font-family: 'Maplestory';
-    src: url('/fonts/Maplestory-Bold.ttf') format('truetype');
+    src: url('https://hazysound.github.io/ChallengersPointCalculator/fonts/Maplestory-Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Maplestory';
-    src: url('/fonts/Maplestory-Light.ttf') format('truetype');
+    src: url('https://hazysound.github.io/ChallengersPointCalculator/fonts/Maplestory-Light.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
